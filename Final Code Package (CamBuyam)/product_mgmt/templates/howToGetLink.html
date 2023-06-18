@@ -1,0 +1,35 @@
+{%extends 'bottom_dashboard.html'%}
+{%load static%}
+{% block content %} 
+ <style>
+        .container {
+            margin-top: 50px;
+        }
+
+        .fas {
+            margin-left: 12px;
+        }
+    </style>
+
+    <div class="container">
+        <h1 class="text-primary text-center">How to Get the Google Maps URL for your Store</h1>
+        <ol>
+            <li>Open Google Maps in your web browser.</li>
+            <li>Search or Move to the desired location using the search bar at the top of the page.</li>
+            <li>Once the location appears on the map, right-click on the location or its marker.</li>
+            <li>A context menu will appear. Click on "What's here?" in the context menu.</li>
+            <li>A small pop-up window will appear at the bottom of the page with the latitude and longitude coordinates
+                of the location.</li>
+            <li>Click on the coordinates in the pop-up window.</li>
+            <li>The URL for the location will appear in the search bar at the top of the page.</li>
+            <li>Copy the URL from the search bar. It will be in the format
+               <span class="text-muted small ">"https://www.google.com/maps/place/LATITUDE,LONGITUDE".</span>
+            </li>
+        </ol>
+        <p>
+            That's it! You now have the Google Maps URL for the desired location. You can copy the link and use it to
+            Add the Store .
+        </p>
+    </div>
+
+    {% endblock content %}

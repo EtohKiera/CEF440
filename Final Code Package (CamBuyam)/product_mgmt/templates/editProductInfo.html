@@ -1,0 +1,68 @@
+{%extends 'bottom_dashboard.html'%}
+
+{% block content %}
+<style>
+    .form-container {
+        border: 2px solid #c3c4c5;
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        width: 350px;
+    }
+</style>
+<title>Add New Product</title>
+
+
+
+
+
+<div class="container form-container">
+    <h3 class="text-center text-muted">Edit Product Details</h3>
+    <form method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+
+        <div class="mb-3">
+            <input type="text" class="form-control" name="name" placeholder="Name"
+                value="{{product.product_name}}">
+        </div>
+        <div class="mb-3">
+            <label class="text-muted" for="price">Price</label>
+
+            <input type="number" id="price" class="form-control" name="price" placeholder="Price in XAF"
+                value="{{product.price}}">
+        </div>
+
+        <div class="mb-3">
+            <label class="text-muted" for="quantity">Available quantity</label>
+
+            <input type="number" id="quantity" class="form-control" name="quantity" placeholder="Quantity available"
+                value="{{product.quantity}}">
+        </div>
+        <div class="mb-3">
+            <label class="text-muted" for="category">category</label>
+
+            <select class="form-select" id="category" name="category">
+                <option value="{{product.category}}">{{product.category}}</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Home Appliances">Home Appliances</option>
+                <option value="Groceries & Food Products">Groceries & Food Products</option>
+                <option value="Beauty & Personal care">Beauty & Personal care</option>
+                <option value="Sports & Fitness Equipment">Sports & Fitness Equipment</option>
+                <option value="Books">Books</option>
+                <option value="Health & Wellness">Health & Wellness</option>
+                <option value="Atomotive & Spare Parts">Atomotive & Spare Parts</option>
+                <option value="Fashion & Clothing">Fashion & Clothing</option>
+                <option value="Furniture & Home Decor">Furniture & Home Decor</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="text-muted" for="description">Description</label>
+
+            <textarea class="form-control" id="description" name="description" placeholder="Description"
+                rows="3"   >{{product.description}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add</button>
+    </form>
+</div>
+
+{% endblock content %}

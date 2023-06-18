@@ -1,0 +1,93 @@
+{%extends 'bottom_dashboard.html'%}
+
+{% block content %}
+  
+  <style>
+
+    .search-form .form-control-range::-moz-range-thumb {
+      background-color: #007bff;
+    }
+
+    .search-form .form-control-range::-webkit-slider-thumb {
+      background-color: #007bff;
+    }
+    .container {
+      border: 2px solid #c3c4c5;
+      margin-top: 20px;
+      padding: 20px;                                                                
+      border-radius: 10px;
+      width: 350px ;
+
+    }
+  
+    </style>
+
+  <div class="container">
+    <div class="search-form">
+      <h4 class="text-center text-muted">Search Product</h4>
+      <form method="post" enctype="multipart/form-data" id="myForm" onsubmit="return validateForm()" >
+        {%csrf_token%}
+        <div class="mb-3">
+          <input type="text" class="form-control" id="keywords" name="keyword" placeholder="Enter keyword">
+        </div>
+        <div class="mb-3">
+          <select class="form-select" id="market" name="market">
+            <option value="">Select a Market </option>
+            {% for market in markets %}
+            <option value="{{market.id}}">{{market.market_name}} - {{market.market_location}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" id="category" name="category">
+            <option value="">Select a category</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Home Appliances">Home Appliances</option>
+            <option value="Groceries & Food Products">Groceries & Food Products</option>
+            <option value="Beauty & Personal care">Beauty & Personal care</option>
+            <option value="Sports & Fitness Equipment">Sports & Fitness Equipment</option>
+            <option value="Books">Books</option>
+            <option value="Health & Wellness">Health & Wellness</option>
+            <option value="Atomotive & Spare Parts">Atomotive & Spare Parts</option>
+            <option value="Fashion & Clothing">Fashion & Clothing</option>
+            <option value="Furniture & Home Decor">Furniture & Home Decor</option>
+          </select>
+        </div>
+        
+        <div class="mb-3">
+          <label for="range" class="form-label">Price Range</label>
+          <input type="range" class="form-range" id="range" name="price-range" min="25" max="1000000">
+          <p>25 - <span id="rangeValue">500000</span> XAF</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Search <i class="fa fa-search"></i> </button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var rangeInput = document.getElementById('range');
+      var rangeValue = document.getElementById('rangeValue');
+
+      rangeInput.addEventListener('input', function () {
+        rangeValue.textContent = rangeInput.value;
+      });
+    });
+    function validateForm() {
+        // Get references to form inputs
+        var keywordsInput = document.getElementById("keywords");
+        var marketInput = document.getElementById("market");
+        var categoryInput = document.getElementById("category");
+
+        // Perform validation
+        if (keywordsInput.value === "") {
+            alert("Please Enter a keyword.");
+            return false; // Prevent form submission
+        }
+
+        // Form is valid, continue with submission
+        return true;
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  {%endblock content %}

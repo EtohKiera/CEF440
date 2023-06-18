@@ -1,0 +1,58 @@
+{%extends 'bottom_dashboard.html'%}
+
+{% block content %}
+  <style>
+
+
+    .product-picture {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 5%;
+      border: 1px solid gray;
+      margin-top: 3px;
+    }
+
+    a,a:hover{
+      text-decoration: none;
+    }
+
+  </style>
+  <title>Search  results</title>
+
+
+
+    <div class="container">
+      <div class="row pt-4 text-left">
+        <h6 class="text-muted">{{products.count}} results for <strong>{{keyword}}</strong> </h6>
+      </div>
+    </div>
+    {% for product in products %}
+    <a href="{% url 'product-info' product_id=product.id  %}">
+    <div class="container ">
+      <div class="card">
+        <div class="card-body bg-light">
+          <div class="row">
+            <div class="col-4">
+              <img src="{{product.photo.url}}" alt="Product Photo" class="product-picture">
+            </div>
+            <div class="col-8 text-left">
+              <h5 class="">{{product.product_name}}</h5>   
+              <p class="fw-normal">{{product.price}} XAF <span class="text-info">Negotiable</span></p>
+              <p class=" fs-6 fw-light text-small"><i class="fa text-muted fa-store"></i> {{product.store.store_name}}
+              <p class=" fs-6 fw-light text-small"><i class="fa text-muted fa-map-marker-alt"></i> {{product.store.market_id.market_name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </a>
+    {% endfor %}
+    
+    <div class="container ">
+      <div class="card">
+      
+        </div>
+      </div>
+    </div>
+   {% endblock content %}
