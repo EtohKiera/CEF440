@@ -1,0 +1,153 @@
+{%extends 'bottom_dashboard.html'%}
+
+{% block content %}
+  <style>
+    .profile-picture {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid gray;
+      margin-top: 25px;
+    }
+
+    .product-picture {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 5%;
+      border: 1px solid gray;
+      margin-top: 3px;
+    }
+
+    .user-info {
+      padding-top: 20px;
+    }
+
+    .user-info h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .user-info p {
+      font-size: 16px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .user-stats {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .user-stats li {
+      display: inline-block;
+      margin-right: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .user-stats li strong {
+      color: #333;
+      font-weight: bold;
+    }
+
+    #product,#product:hover{
+      text-decoration: none;
+    }
+    
+
+
+  
+
+    .post-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+ 
+  </style>
+  <title>User Profile</title>
+
+
+  <div class="container">
+    <div class="row mt-10 bg-light pb-3">
+    
+       <div class="col-4 text-center">
+        <!-- User profile picture -->
+        <a {% if user_is_owner %} 
+             href="{% url 'change-photo' %}"
+           {% endif%}>
+            <img src="{{seller.seller_id.profile_photo.url}}" alt="Profile Picture" class="profile-picture">
+        </a>
+          </div>
+
+      <div class="col-8 user-info">
+        <!-- User profile information -->
+        <h1 class="h4">{{seller.seller_id.fname}} {{seller.seller_id.lname}}</h1>
+        <h6 class="h6"> <i class="fas fa-phone text-success"></i> {{seller.seller_id.phone}} </h6>
+        <h6 class="h6"> <i class="fas fa-envelope text-danger"></i> {{seller.seller_id.email}}</h6>
+        <p>{{seller.bio}}</p>
+        <ul class="user-stats">
+          <li><strong>Stores:</strong> {{total_stores}}</li>
+          <li><strong>Products:</strong> {{ products.count }} </li>
+        </ul>
+        
+        {% if user_is_owner %} 
+        <a href="{% url 'edit-bio' %}" class="btn btn-outline-primary "> <i class="fa fa-pen"></i> Edit Bio</a>
+        {% endif %} 
+        {% if seller.verification_status == "Verified" %}
+          <strong class="text-info small"> Verified <i class="fas fa-check-circle"></i> </strong>
+        {% elif seller.verification_status == "Pending" %}
+          <strong class="text-muted"> Verification Pending <i class="fas fa-clock"></i></strong>
+        {% else %}
+          {% if user_is_owner %} 
+            <a href="{% url 'verify-account' %}" class="btn btn-sm btn-outline-info">Verify Account</a>
+            {% endif %} 
+        {% endif %}
+        {% if seller.verification_status == "declined" %}
+        <br>
+        <strong class="small text-danger">KYC Verification Declined <i class="fas fa-exclamation-triangle"></i></strong>
+        {% endif %}
+  </div>
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="row pt-4 text-left">
+        <h5>Products</h5>
+      </div>
+    </div>
+    {% for product in products %}
+    <div class="container ">
+      <a href="{% url 'product-info' product_id=product.id %}" id="product" >
+
+      <div class="card">
+        <div class="card-body bg-light">
+          <div class="row">
+            <div class="col-4">
+              <img src="{{product.photo.url}}" alt="Product Photo" class="product-picture">
+            </div>
+            <div class="col-8 text-left">
+              <h5 class="">{{product.product_name}}</h5>   
+              <p class="fw-normal">{{product.price}} XAF <span class="text-info">Negotiable</span></p>
+              <p class=" fs-6 fw-light text-small"><i class="fa text-muted fa-store"></i> {{product.store.store_name}}
+              <p class=" fs-6 fw-light text-small"><i class="fa text-muted fa-map-marker-alt"></i> {{product.store.market_id.market_name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    </div>
+ 
+    {% endfor %}
+    
+ 
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% endblock content %}
